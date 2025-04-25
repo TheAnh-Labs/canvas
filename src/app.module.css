@@ -1,0 +1,50 @@
+.canvas {
+    position: relative;
+    background-color: pink;
+    width: 1000px;
+    height: 1000px;
+    border: 1px solid black;
+}
+
+.box {
+    background-color: red;
+    touch-action: none ;
+    /* border: 1px solid black; */
+}
+
+.boxId {
+    position: absolute;
+    left: 0;
+    top: -15px;
+    font-size: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.removeButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 10px;
+    padding: 10px;
+    height: auto;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    color: transparent;
+}
+
+.removeButton:hover {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    border-radius: 4;
+}
