@@ -1,11 +1,13 @@
-import { Button, Space, Typography } from 'antd';
+import { Button, Layout, Typography } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { Rnd } from 'react-rnd';
 import { v4 as uuid } from 'uuid'
 const { Text } = Typography
 import s from './app.module.css';
-import { createDummyStream } from './FakeStream';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
+import { createDummyStream } from './fakeStream';
+import Sider from 'antd/es/layout/Sider';
+import { Content, Header } from 'antd/es/layout/layout';
 
 interface Box {
   id: string;
@@ -88,39 +90,48 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <Space>
-      <Button onClick={addBox}>Add a new box</Button>
-      <Button onClick={addStream}>Add a fake stream</Button>
-      <TransformWrapper
-        wheel={{ step: 1, activationKeys: ['shift'] }}
-        onWheel={() => console.log('Zoom detected')}
-        onWheelStop={() => console.log('wheel stopped')}
-        minScale={0.2}
-        maxScale={2}
-        panning={{ excluded: [s.box] }}
-      >
-        <TransformComponent>
-          <div className={s.canvas}>
-            {boxes.map((box, index) => (
-              <Rnd
-                bounds='parent'
-                position={{ x: box.x, y: box.y }}
-                onDragStop={(_, d) => updateBox(box.id, { x: d.x, y: d.y })}
-                size={{ width: box.width, height: box.height }}
-                onResizeStop={(_, __, ref, ___, position) =>
-                  updateBox(box.id, { width: ref.offsetWidth, height: ref.offsetHeight, x: position.x, y: position.y })}
-                className={s.box}
-                lockAspectRatio={box.ratio}
-                key={index}>
-                {box.content}
-                <Text className={s.boxId}>{box.id}</Text>
-                <Button className={s.removeButton} onClick={() => removeBox(box.id)}>✖</Button>
-              </Rnd>
-            )
-            )}
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
-    </Space>
+    <Layout className={s.layout}>
+      <Sider className={s.sider} width={300}>
+        <Text style={{ color: 'white' }}>Sider</Text>
+      </Sider>
+      <Layout>
+        <Header className={s.header}>
+        </Header>
+        <Content className={s.content}>
+          <TransformWrapper
+            minScale={0.2}
+            maxScale={2}
+            panning={{ excluded: [s.box] }}
+            limitToBounds={true}
+            centerOnInit={true}
+            centerZoomedOut={true}
+          >
+            <TransformComponent>
+              <div className={s.canvas}>
+                <Button onClick={addBox}>Add a new box</Button>
+                <Button onClick={addStream}>Add a fake stream</Button>
+                {boxes.map((box, index) => (
+                  <Rnd
+                    bounds='parent'
+                    position={{ x: box.x, y: box.y }}
+                    onDragStop={(_, d) => updateBox(box.id, { x: d.x, y: d.y })}
+                    size={{ width: box.width, height: box.height }}
+                    onResizeStop={(_, __, ref, ___, position) =>
+                      updateBox(box.id, { width: ref.offsetWidth, height: ref.offsetHeight, x: position.x, y: position.y })}
+                    className={s.box}
+                    lockAspectRatio={box.ratio}
+                    key={index}>
+                    {box.content}
+                    <Text className={s.boxId}>{box.id}</Text>
+                    <Button className={s.removeButton} onClick={() => removeBox(box.id)}>✖</Button>
+                  </Rnd>
+                )
+                )}
+              </div>
+            </TransformComponent>
+          </TransformWrapper>
+        </Content>
+      </Layout>
+    </Layout>
   )
 }

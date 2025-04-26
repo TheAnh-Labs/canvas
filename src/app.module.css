@@ -1,15 +1,37 @@
+.layout {
+    min-height: 100vh;
+}
+
+.sider {
+    position: fixed;
+    background-color: black;
+    z-index: 1000;
+    height: 100vh;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    z-index: 999;
+}
+
+.content {
+    margin-left: 300px;
+    margin-top: 50px;
+}
+
 .canvas {
     position: relative;
     background-color: pink;
-    width: 1000px;
-    height: 1000px;
-    border: 1px solid black;
+    width: 2000px;
+    height: 2000px;
 }
 
 .box {
     background-color: red;
     touch-action: none ;
-    /* border: 1px solid black; */
 }
 
 .boxId {
